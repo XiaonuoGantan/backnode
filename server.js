@@ -12,8 +12,8 @@ function renderPage() {
         });
         var ww = doc.createWindow();
         ww.console = console;
-        ww.browzooRenderInstance = {};
-        ww.browzooRenderInstance.done = function() {
+        ww.backnodeRenderInstance = {};
+        ww.backnodeRenderInstance.done = function() {
             def.resolve(ww);
         }
         setTimeout(function() {

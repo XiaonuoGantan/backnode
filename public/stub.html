@@ -24,8 +24,8 @@
                     var app_model = new AppModel();
 
                     // Do we have a serialized version of the app already?
-                    if (window.__brz_app_serialized) {
-                        app_model.mport(window.__brz_app_serialized);
+                    if (window.__backnode_app_serialized) {
+                        app_model.mport(window.__backnode_app_serialized);
                     }
 
                     var app_view = new AppView({'el': document.body, 'model': app_model});
@@ -38,12 +38,12 @@
                     if (app_started === "false") {
                         document.body.setAttribute('data-app-started', "true");
 
-                        // Ship it to the client!
+                        // Running server-side; ship it to the client!
                         if (typeof(window.browzooRenderInstance) !== 'undefined') {
                             // Serialize application state and repopulate
                             var ser_script = document.createElement('script');
                             ser_script.appendChild(document.createTextNode([
-                                "window.__brz_app_serialized = ",
+                                "window.__backnode_app_serialized = ",
                                 JSON.stringify(app_model.xport()),
                                 ";"
                             ].join('')));
