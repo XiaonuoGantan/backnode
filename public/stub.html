@@ -22,14 +22,19 @@
 
                 $(function() {
                     var app_model = new AppModel();
+
+                    // Do we have a serialized version of the app already?
                     if (window.__brz_app_serialized) {
                         app_model.mport(window.__brz_app_serialized);
                     }
+
                     var app_view = new AppView({'el': document.body, 'model': app_model});
                     app_view.render();
                     window.app_view = app_view;
 
                     var app_started = document.body.getAttribute('data-app-started');
+                    
+                    // If we haven't started already, start it up.
                     if (app_started === "false") {
                         document.body.setAttribute('data-app-started', "true");
 
