@@ -39,7 +39,7 @@
                         document.body.setAttribute('data-app-started', "true");
 
                         // Running server-side; ship it to the client!
-                        if (typeof(window.browzooRenderInstance) !== 'undefined') {
+                        if (typeof(window.backnodeRenderInstance) !== 'undefined') {
                             // Serialize application state and repopulate
                             var ser_script = document.createElement('script');
                             ser_script.appendChild(document.createTextNode([
@@ -58,7 +58,7 @@
                                 
                             });
 
-                            window.browzooRenderInstance.done();
+                            window.backnodeRenderInstance.done();
                         }
                     }
                 });

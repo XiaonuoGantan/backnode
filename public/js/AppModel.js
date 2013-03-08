@@ -26,7 +26,7 @@
 if (typeof define !== 'function') { var define = (require('amdefine'))(module); }
 
 var environment = {};
-environment.server = (typeof browzooRenderInstance !== 'undefined');
+environment.server = (typeof backnodeRenderInstance !== 'undefined');
 
 define([
 	'require',
@@ -50,7 +50,7 @@ define([
 
 	AppModel.prototype.clientReady = function() {
 		if (environment.server) {
-			window.browzooRenderInstance.done();
+			window.backnodeRenderInstance.done();
 		}
 	};
 
