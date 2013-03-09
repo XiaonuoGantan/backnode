@@ -25,9 +25,6 @@
 
 if (typeof define !== 'function') { var define = (require('amdefine'))(module); }
 
-var environment = {};
-environment.server = (typeof browzooRenderInstance !== 'undefined');
-
 define([
 	'require',
 	'backbone',
@@ -38,9 +35,11 @@ define([
 
 	AppView.prototype.render = function() {
 		this.$el.empty();
-		this.$el.append('Hello from AppView!');
+		this.$el.append('Hello from AppView! ');
+		this.$el.append(
+			'This was rendered on the ' +
+			(this.model.onserver ? 'server' : 'client'));
 	}
 
 	return AppView;
 });
-

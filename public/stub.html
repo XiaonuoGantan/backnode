@@ -24,8 +24,8 @@
                     var app_model = new AppModel();
 
                     // Do we have a serialized version of the app already?
-                    if (window.__brz_app_serialized) {
-                        app_model.mport(window.__brz_app_serialized);
+                    if (window.__backnode_app_serialized) {
+                        app_model.mport(window.__backnode_app_serialized);
                     }
 
                     var app_view = new AppView({'el': document.body, 'model': app_model});
@@ -33,33 +33,32 @@
                     window.app_view = app_view;
 
                     var app_started = document.body.getAttribute('data-app-started');
-                    
-                    // If we haven't started already, start it up.
-                    if (app_started === "false") {
-                        document.body.setAttribute('data-app-started', "true");
 
-                        // Ship it to the client!
-                        if (typeof(window.browzooRenderInstance) !== 'undefined') {
-                            // Serialize application state and repopulate
-                            var ser_script = document.createElement('script');
-                            ser_script.appendChild(document.createTextNode([
-                                "window.__brz_app_serialized = ",
-                                JSON.stringify(app_model.xport()),
-                                ";"
-                            ].join('')));
-                            $(document.head).prepend(ser_script);
+                    // Running server-side; ship it to the client!
+                    if (typeof(window.backnodeRenderInstance) !== 'undefined') {
+                        // Serialize application state and repopulate
+                        var ser_script = document.createElement('script');
+                        ser_script.appendChild(document.createTextNode([
+                            "window.__backnode_app_serialized = ",
+                            JSON.stringify(app_model.xport()),
+                            ";"
+                        ].join('')));
+                        $(document.head).prepend(ser_script);
 
-                            // Cleaning up so we don't confuse requirejs
-                            // var scripts = Array.prototype.slice.apply(document.scripts);
-                            _.each($('script'), function(script) {
-                                if (script.getAttribute('data-requirecontext')) {
-                                    $(script).remove();
-                                }
-                                
-                            });
+                        $(document.head).append(document.createComment(
+                            ' Rendered on ' + backnodeRenderInstance.hostname + ':' + backnodeRenderInstance.process.pid.toString() + ' in ' +
+                                (new Date() - backnodeRenderInstance.start_time).toString() + 'ms '
+                        ));
 
-                            window.browzooRenderInstance.done();
-                        }
+                        // Cleaning up so we don't confuse requirejs
+                        // var scripts = Array.prototype.slice.apply(document.scripts);
+                        _.each($('script'), function(script) {
+                            if (script.getAttribute('data-requirecontext')) {
+                                $(script).remove();
+                            }
+                            
+                        });
+                        window.backnodeRenderInstance.done();
                     }
                 });
             });
