@@ -1,6 +1,8 @@
 var deferred = require("deferred");
 var jsdom = require("jsdom").jsdom;
 var fs = require("fs");
+var os = require('os');
+
 
 var stub_html = fs.readFileSync("./public/stub.html").toString();
 
@@ -13,6 +15,9 @@ function renderPage() {
         var ww = doc.createWindow();
         ww.console = console;
         ww.backnodeRenderInstance = {};
+        ww.backnodeRenderInstance.start_time = new Date();
+        ww.backnodeRenderInstance.process = process;
+        ww.backnodeRenderInstance.hostname = os.hostname();
         ww.backnodeRenderInstance.done = function() {
             def.resolve(ww);
         }

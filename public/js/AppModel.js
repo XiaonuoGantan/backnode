@@ -46,6 +46,7 @@ define([
 
 	AppModel.prototype.initialize = function() {
 		this._stuff = [];
+		this.onserver = environment.server;
 	};
 
 	AppModel.prototype.clientReady = function() {
